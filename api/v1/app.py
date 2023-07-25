@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Creating an instance of Flask"""
+"""Returns the status of the API"""
 
 from flask import Flask, jsonify
 from models import storage
@@ -7,37 +7,36 @@ from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
 
-
-# Creating flask app instance
+# Create a Flask app instance
 app = Flask(__name__)
-
 
 # Enable Cross-Origin Resource Sharing (CORS)
 # to allow requests from any origin
 CORS(app, origins="0.0.0.0")
 
-# Register the app_views blueprint, contains API Rolutes
+# Register the app_views blueprint, which contains the API routes
 app.register_blueprint(app_views)
 
-# Define teardown_appcontext decorator to close database
-# Method that tears down app context
+
+# Define a teardown_appcontext decorator to close the database
+# session after each request
 @app.teardown_appcontext
 def teardown_appcontext(self):
-    """Calls the close method in storage"""
+    """Exits storage by calling close"""
     storage.close()
 
 
-# 404 error
+# Define an errorhandler for 404 errors to handle resource not found
 @app.errorhandler(404)
 def not_found(error):
-    """404 error"""
+    """Handles 404 errors"""
     return jsonify({"error": "Not found"}), 404
 
-# If main file
-if __name__ == '__main__':
-    # Gets host and port from env variables
+# Start the Flask application
+if __name__ == "__main__":
+    # Get the host and port from environment variables, or use default values
     hosts = getenv('HBNB_API_HOST', default='0.0.0.0')
     ports = getenv('HBNB_API_PORT', default=5000)
 
-    # Runs the application
+    # Run the Flask app on the specified host and port, with threading enabled
     app.run(host=hosts, port=ports, threaded=True)
