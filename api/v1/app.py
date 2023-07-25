@@ -15,8 +15,11 @@ app = Flask(__name__)
 # Enable Cross-Origin Resource Sharing (CORS)
 # to allow requests from any origin
 CORS(app, origins="0.0.0.0")
+
+# Register the app_views blueprint, contains API Rolutes
 app.register_blueprint(app_views)
 
+# Define teardown_appcontext decorator to close database
 # Method that tears down app context
 @app.teardown_appcontext
 def teardown_appcontext(self):
