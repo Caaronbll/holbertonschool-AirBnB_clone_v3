@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 # Cross-Origin Resource Sharing
 CORS(app, origins="0.0.0.0")
-
+app.register_blueprint(app_views)
 
 # Method that tears down app context
 @app.teardown_appcontext
