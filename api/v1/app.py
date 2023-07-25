@@ -11,7 +11,9 @@ from flask_cors import CORS
 # Creating flask app instance
 app = Flask(__name__)
 
-# Cross-Origin Resource Sharing
+
+# Enable Cross-Origin Resource Sharing (CORS)
+# to allow requests from any origin
 CORS(app, origins="0.0.0.0")
 app.register_blueprint(app_views)
 
