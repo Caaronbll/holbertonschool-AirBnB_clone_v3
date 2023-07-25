@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""creating an instance of Flask"""
+"""Creating an instance of Flask"""
 
 from flask import Flask, jsonify
 from models import storage
